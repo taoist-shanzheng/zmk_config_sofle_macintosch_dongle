@@ -14,7 +14,7 @@
 #include <dt-bindings/zmk/rgb.h>
 
 #define BT_FORCE(slot) \
-behaviors {\
+macros {\
     bt_out##slot: bt_out##slot { \
         compatible = "zmk,behavior-macro"; \
         #binding-cells = <0>; \
