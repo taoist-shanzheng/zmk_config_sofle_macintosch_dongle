@@ -13,14 +13,12 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/zmk/rgb.h>
 
-#define BT_FORCE(slot) \
-macros {\
+#define BT_FORCE_MACRO(slot) \
     bt_out##slot: bt_out##slot { \
         compatible = "zmk,behavior-macro"; \
         #binding-cells = <0>; \
-        bindings =  <&bt BT_SEL slot> , <&out OUT_BLE>; \
-    };\
-};
+        bindings = <&out OUT_BLE>, <&bt BT_SEL slot>; \
+    }
 
 / {
     
@@ -81,6 +79,12 @@ macros {\
     };
 
     macros {
+        BT_FORCE_MACRO(0);
+        BT_FORCE_MACRO(1);
+        BT_FORCE_MACRO(2);
+        BT_FORCE_MACRO(3);
+        BT_FORCE_MACRO(4);
+
         shift_contrl_alt: shift_contrl_alt {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
