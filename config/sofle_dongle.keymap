@@ -22,6 +22,21 @@
 
 / {
     behaviors {
+
+        td_lf_win_ctrl: tap_dance_lf_win_ctrl {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <220>;
+            bindings = <&kp LEFT_WIN>, <&kp LC(LEFT_WIN)>;
+        };
+
+        td_rt_win_ctrl: tap_dance_rt_win_ctrl {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <220>;
+            bindings = <&kp RIGHT_WIN>, <&kp RC(RIGHT_WIN)>;
+        };
+
         td_f1_f11: tap_dance_f1_f11 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
@@ -89,7 +104,7 @@
 &kp TAB          &kp Q       &kp W        &kp E                &kp R          &kp T            &kp Y            &kp U            &kp I       &kp O          &kp P   &kp BSLH
 &fn_tap 2 ENTER  &kp A       &kp S        &kp D                &kp F          &kp G            &mkp MCLK        &mkp LCLK        &kp H       &kp J          &kp K   &kp L     &kp SEMI   &kp APOS
 &kp LSHFT        &kp Z       &kp X        &kp C                &kp V          &kp B            &mkp LCLK        &mkp RCLK        &bl BL_DEC  &bl BL_INC     &kp N   &kp M     &kp COMMA  &kp DOT        &kp FSLH  &kp RIGHT_SHIFT
-&kp LEFT_WIN     &kp LALT    &ctrl_dance  &fn_tap 3 BACKSPACE  &fn_tap 4 DEL  &fn_tap 4 ENTER  &fn_tap 1 SPACE  &ctrl_dance      &kp LALT    &kp RIGHT_WIN
+&&td_lf_win_ctrl     &kp LALT    &ctrl_dance  &fn_tap 3 BACKSPACE  &fn_tap 4 DEL  &fn_tap 4 ENTER  &fn_tap 1 SPACE  &ctrl_dance      &kp LALT    &td_rt_win_ctrl
             >;
 
             sensor-bindings =
