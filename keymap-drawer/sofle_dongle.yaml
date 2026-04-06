@@ -58,7 +58,7 @@ layers:
   - .
   - /
   - RIGHT SHIFT
-  - LEFT WIN
+  - '&td_lf_win_ctrl'
   - LALT
   - '&ctrl_dance'
   - {t: BACKSPACE, h: func}
@@ -67,7 +67,7 @@ layers:
   - {t: SPACE, h: num_syb}
   - '&ctrl_dance'
   - LALT
-  - RIGHT WIN
+  - '&td_rt_win_ctrl'
   num_syb:
   - '&bootloader'
   - '`'
