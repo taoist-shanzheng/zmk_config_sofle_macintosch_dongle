@@ -144,8 +144,6 @@ static void update_brightness_handler(struct k_work *work) {
         }
     }
     
-    // 注意：这里没有 k_work_reschedule(update_work, ...)！
-    // 彻底斩断了循环，它现在是真正的单次触发任务。
 }
 
 /* === Public API === */

@@ -34,7 +34,7 @@ LOG_MODULE_REGISTER(trackpoint, LOG_LEVEL_DBG);
 #define MOTION_GPIO_NODE DT_NODELABEL(gpio0)
 #define MOTION_GPIO_PIN 14
 #define MOTION_GPIO_FLAGS (GPIO_ACTIVE_LOW | GPIO_PULL_UP)
-
+#define SPANCE_POSITION_CODE 62 
 /* ========= 全局状态 ========= */
 static bool space_pressed = false;
 
@@ -43,7 +43,7 @@ static int space_listener_cb(const zmk_event_t *eh) {
     const struct zmk_position_state_changed *ev = as_zmk_position_state_changed(eh);
     if (!ev) return 0;
 
-    if (ev->position == 62) { // Space position code
+    if (ev->position == SPANCE_POSITION_CODE) { // Space position code
         space_pressed = ev->state;
     }
     return 0;
@@ -146,8 +146,8 @@ static void trackpoint_work_cb(struct k_work *work) {
 
                     int16_t scroll_ticks = data->scroll_residue_y / divisor;
                     if (scroll_ticks != 0) {
-                        input_report_rel(dev, INPUT_REL_WHEEL, -scroll_ticks, true, K_FOREVER);
-                        data->scroll_residue_y %= divisor; // 保留余数
+                        input_report_rel(dev, INPUT_REL_WHEEL, scroll_ticks, true, K_FOREVER);
+                        data->scroll_residue_y %= divisor;
                     }
                 } else {
                     data->scroll_residue_y = 0; // 无该轴操作时清零残余，彻底隔绝积累
@@ -167,9 +167,7 @@ static void trackpoint_work_cb(struct k_work *work) {
 
                     int16_t scroll_ticks = data->scroll_residue_x / divisor;
                     if (scroll_ticks != 0) {
-                        // 横向滚动，Zephyr 事件码为 INPUT_REL_HWHEEL
-                        // (注：如果横向滚动方向和你的习惯相反，请改为 -scroll_ticks)
-                        input_report_rel(dev, INPUT_REL_HWHEEL, scroll_ticks, true, K_FOREVER);
+                        input_report_rel(dev, INPUT_REL_HWHEEL, -scroll_ticks, true, K_FOREVER);
                         data->scroll_residue_x %= divisor;
                     }
                 } else {
