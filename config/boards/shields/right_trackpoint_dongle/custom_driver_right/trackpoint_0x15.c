@@ -8,6 +8,7 @@
 #include <zephyr/drivers/i2c.h>
 #include <zephyr/input/input.h>
 #include <zephyr/logging/log.h>
+#include <zephyr/sys/util.h>
 
 #include <zmk/event_manager.h>
 #include <zmk/events/position_state_changed.h>
@@ -18,38 +19,27 @@
 LOG_MODULE_REGISTER(trackpoint, LOG_LEVEL_DBG);
 
 /* ========================================================================= */
-/* 鼠标与滚轮可调参数 (用户配置区)                         */
+/* 鼠标与滚轮可调参数 (已映射至 Kconfig，用户可在 .conf 中配置)                 */
 /* ========================================================================= */
 
 // --- 滚轮方向配置 ---
-// 根据你的习惯反转滚轮方向 (1 为默认正向, -1 为反向)
-#define SCROLL_X_DIR 1
-#define SCROLL_Y_DIR 1
+#define SCROLL_X_DIR CONFIG_TRACKPOINT_SCROLL_X_DIR
+#define SCROLL_Y_DIR CONFIG_TRACKPOINT_SCROLL_Y_DIR
 
-// --- 滚轮灵敏度与粒度配置 (线性映射算法) ---
-// 过滤轻微手抖的死区 (小于此值的物理移动将被忽略)
-#define SCROLL_DEADZONE 2
-
-// TrackPoint 的最大物理输出值 (通常为 128)
-#define SCROLL_INPUT_MAX 128
-
-// 最慢滚动时的除数：决定了微操时的“细粒度”。值越大，轻轻推时滚动越慢、越细腻。
-// 如果觉得现在的最小滚动还是太快，可以将此值调大 (例如 80 或 100)
-#define SCROLL_DIVISOR_SLOW 60
-
-// 最快滚动时的除数：决定了用力推时的极限滚动速度。值越小，全速滚动越快。
-#define SCROLL_DIVISOR_FAST 8
+// --- 滚轮灵敏度与粒度配置 ---
+#define SCROLL_DEADZONE CONFIG_TRACKPOINT_SCROLL_DEADZONE
+#define SCROLL_INPUT_MAX CONFIG_TRACKPOINT_SCROLL_INPUT_MAX
+#define SCROLL_DIVISOR_SLOW CONFIG_TRACKPOINT_SCROLL_DIVISOR_SLOW
+#define SCROLL_DIVISOR_FAST CONFIG_TRACKPOINT_SCROLL_DIVISOR_FAST
 
 // --- 防误触锁定比例配置 ---
-// 判断是否为单向移动的比例 (分子 / 分母)。
-// 默认为 3/2 (1.5倍)，意味着一个方向的力必须是另一个方向的 1.5 倍才触发，避免对角线乱滚。
-#define DOMINANT_NUMERATOR 3
-#define DOMINANT_DENOMINATOR 2
+#define DOMINANT_NUMERATOR CONFIG_TRACKPOINT_DOMINANT_NUMERATOR
+#define DOMINANT_DENOMINATOR CONFIG_TRACKPOINT_DOMINANT_DENOMINATOR
 
-// --- 鼠标指针基础配置 ---
-#define MOUSE_BASE_SPEED 0.5f
-#define MOUSE_SENS_BASE 0.3f
-#define MOUSE_SENS_STEP 0.01f
+// --- 鼠标指针基础配置 (Kconfig 为整数百分比，这里除以 100 转为浮点数) ---
+#define MOUSE_BASE_SPEED (CONFIG_TRACKPOINT_MOUSE_BASE_SPEED_PERCENT / 100.0f)
+#define MOUSE_SENS_BASE (CONFIG_TRACKPOINT_MOUSE_SENS_BASE_PERCENT / 100.0f)
+#define MOUSE_SENS_STEP (CONFIG_TRACKPOINT_MOUSE_SENS_STEP_PERCENT / 100.0f)
 
 /* ========================================================================= */
 
@@ -60,24 +50,25 @@ LOG_MODULE_REGISTER(trackpoint, LOG_LEVEL_DBG);
 #define MOTION_GPIO_NODE DT_NODELABEL(gpio0)
 #define MOTION_GPIO_PIN 14
 #define MOTION_GPIO_FLAGS (GPIO_ACTIVE_LOW | GPIO_PULL_UP)
-// 按键位置
-#define SPANCE_POSITION_CODE 62 
+
+// 模式切换按键位置
+#define TOGGLE_POSITION_CODE CONFIG_TRACKPOINT_TOGGLE_KEY_POSITION 
 
 /* ========= 全局状态 ========= */
-static bool space_pressed = false;
+static bool toggle_key_pressed = false;
 
-/* ========= Space 按键监听 ========= */
-static int space_listener_cb(const zmk_event_t *eh) {
+/* ========= 模式切换按键监听 ========= */
+static int toggle_listener_cb(const zmk_event_t *eh) {
     const struct zmk_position_state_changed *ev = as_zmk_position_state_changed(eh);
     if (!ev) return 0;
 
-    if (ev->position == SPANCE_POSITION_CODE) { 
-        space_pressed = ev->state;
+    if (ev->position == TOGGLE_POSITION_CODE) { 
+        toggle_key_pressed = ev->state;
     }
     return 0;
 }
-ZMK_LISTENER(trackpoint_space_listener, space_listener_cb);
-ZMK_SUBSCRIPTION(trackpoint_space_listener, zmk_position_state_changed);
+ZMK_LISTENER(trackpoint_toggle_listener, toggle_listener_cb);
+ZMK_SUBSCRIPTION(trackpoint_toggle_listener, zmk_position_state_changed);
 
 struct trackpoint_config {
     struct i2c_dt_spec i2c;
@@ -128,30 +119,22 @@ static int trackpoint_read_packet(const struct device *dev, int8_t *dx, int8_t *
 static inline void process_scroll_axis(const struct device *dev, int8_t delta, int16_t *residue, uint16_t input_code, int8_t dir_mult) {
     int abs_delta = abs(delta);
 
-    // 1. 死区与空闲处理：如果没动，清空累加器防止残余位移导致之后的一格漂移
     if (abs_delta <= SCROLL_DEADZONE) {
         *residue = 0; 
         return;
     }
 
-    // 钳制最大输入值，确保映射不会越界
     if (abs_delta > SCROLL_INPUT_MAX) {
         abs_delta = SCROLL_INPUT_MAX;
     }
 
-    // 2. 无极连续映射 (Linear Mapping)
-    // 根据手指当前力度，在 SLOW 和 FAST 之间求出一条平滑直线的当前点。
-    // 这取代了之前跳跃的 if/else 阶梯，使得微操粒度无限顺滑。
     int divisor = SCROLL_DIVISOR_SLOW - 
                   ((SCROLL_DIVISOR_SLOW - SCROLL_DIVISOR_FAST) * abs_delta) / SCROLL_INPUT_MAX;
 
-    // 安全兜底，除数不能为 0
     if (divisor < 1) divisor = 1;
 
-    // 3. 应用乘数反转方向，并倒进累加器
     *residue += (delta * dir_mult);
 
-    // 4. 触发滚动输出，并保留除不尽的余数
     int16_t scroll_ticks = *residue / divisor;
     if (scroll_ticks != 0) {
         input_report_rel(dev, input_code, scroll_ticks, true, K_FOREVER);
@@ -171,7 +154,9 @@ static void trackpoint_work_cb(struct k_work *work) {
         if (trackpoint_read_packet(dev, &dx, &dy) == 0) {
             uint32_t now = k_uptime_get_32();
 
-            if (!space_pressed) {
+            bool is_scroll_mode = IS_ENABLED(CONFIG_TRACKPOINT_START_IN_SCROLL_MODE) ? !toggle_key_pressed : toggle_key_pressed;
+
+            if (is_scroll_mode) {
                 /* 1. 主导轴锁定防误触 */
                 int abs_dx = abs(dx);
                 int abs_dy = abs(dy);
