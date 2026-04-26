@@ -78,7 +78,7 @@
         };
     };
 
-macros {
+    macros {
         BT_FORCE_MACRO(0);
         BT_FORCE_MACRO(1);
         BT_FORCE_MACRO(2);
@@ -95,7 +95,27 @@ macros {
 
     keymap {
         compatible = "zmk,keymap";
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------
+// [ 矩阵索引 (Matrix Index) ]
+// |    0    |
+//
+// |    1    |    2    |    3    |    4    |    5    |    6    |    7    |         |    8    |    9    |   10    |   11    |   12    |   13    |   14    |
+// |   15    |   16    |   17    |   18    |   19    |   20    |                             |   21    |   22    |   23    |   24    |   25    |   26    |
+// |   27    |   28    |   29    |   30    |   31    |   32    |   33    |         |   34    |   35    |   36    |   37    |   38    |   39    |   40    |
+// |   41    |   42    |   43    |   44    |   45    |   46    | 47 | 48 |         | 49 | 50 |   51    |   52    |   53    |   54    |   55    |   56    |
+//                     |   57    |   58    |   59    |   60    |   61    |         |   62    |   63    |   64    |   65    |   66    |
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------
+// [ Layer 0 : Default ]
+// |  BOOT   | // 该按键在接收器上
+//
+// |   ESC   | F1/F11  | F2/F12  |   F3    |   F4    |   F5    |  MUTE   |         |   RGB   |   F6    |   F7    |   F8    |   F9    |   F10   |  BKSP   |
+// |   TAB   |    Q    |    W    |    E    |    R    |    T    |                             |    Y    |    U    |    I    |    O    |    P    |    \    |
+// | FN2/ENT |    A    |    S    |    D    |    F    |    G    |  MCLK   |         |  LCLK   |    H    |    J    |    K    |    L    |    ;    |    '    |
+// |  LSHFT  |    Z    |    X    |    C    |    V    |    B    |LCLK|RCLK|         | BL-|BL+ |    N    |    M    |    ,    |    .    |    /    |  RSHFT  |
+//                     | LF_W/C  |  LALT   |  CTL_D  | FN3/BKS | FN4/DEL |         | FN4/ENT | FN1/SPC |  CTL_D  |  LALT   | RT_W/C  |
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------
         default_layer {
             display-name = "default";
             bindings = <
@@ -112,6 +132,16 @@ macros {
                 <&inc_dec_kp LS(TAB) TAB>;
         };
 
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------
+// [ Layer 1 : Num & Symbols ]
+// |  BOOT   | // 该按键在接收器上
+//
+// |    `    |    !    |    @    |    #    |    $    |    %    |  trans  |         |  trans  |    +    |    7    |    8    |    9    |    ~    |    ^    |
+// |    ~    |    <    |    -    |    =    |    >    |    _    |                             |    -    |    4    |    5    |    6    |    &    |    |    |
+// |    ^    |    {    |    [    |    ]    |    }    |    $    |  trans  |         |  trans  |    *    |    1    |    2    |    3    |    :    |    '    |
+// |  trans  |    ,    |    (    |    )    |    ;    |  none   |TRNS|TRNS|         |TRNS|TRNS|    %    |    0    |    ,    |    .    |    /    |  trans  |
+//                     |  trans  |  trans  |  trans  |  trans  |  trans  |         |  trans  |  trans  |  trans  |  trans  |  trans  |
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------
         num_syb {
             display-name = "num_syb";
             bindings = <
@@ -124,18 +154,38 @@ macros {
             >;
         };
 
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------
+// [ Layer 2 : Direction & Media ]
+// |  BOOT   | // 该按键在接收器上
+//
+// |   USB   |   BT0   |   BT1   |   BT2   |   BT3   |   BT4   |   PWR   |         |   SLP   |  none   |  none   |  none   |  none   |  none   | BT_CLR  |
+// |  none   |  HOME   |    ↑    |   END   |  none   |  none   |                             |  none   |  none   |  none   |  none   |  none   |  none   |
+// |  none   |    ←    |    ↓    |    →    |  none   |  none   |  none   |         |  none   |  LCLK   |  RCLK   |  none   |  none   |  none   |  none   |
+// |  trans  |  PGUP   |   INS   |  PGDN   |  none   |  none   |NONE|NONE|         |NONE|NONE|  none   |  none   |  none   |  none   |  none   |  none   |
+//                     |  trans  |  trans  |  trans  |  trans  |  trans  |         |  trans  |  trans  |  trans  |  trans  |  trans  |
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------
         direction {
             display-name = "direct";
             bindings = <
 &bootloader
-&out OUT_USB  &bt_out0   &bt_out1    &bt_out2   &bt_out3  &bt_out4  &kp C_POWER  &kp C_SLEEP  &none      &none      &none  &none  &none  &bt BT_CLR
-&none         &kp HOME   &kp UP      &kp END    &none     &none     &none        &none        &none      &none      &none  &none
-&none         &kp LEFT   &kp DOWN    &kp RIGHT  &none     &none     &none        &none        &mkp LCLK  &mkp RCLK  &none  &none  &none  &none
-&trans        &kp PG_UP  &kp INSERT  &kp PG_DN  &none     &none     &none        &none        &none      &none      &none  &none  &none  &none       &none  &none
-&trans        &trans     &trans      &trans     &trans    &trans    &trans       &trans       &trans     &trans
+&out OUT_USB  &bt_out0   &bt_out1    &bt_out2   &bt_out3  &bt_out4  &kp C_POWER  &kp C_SLEEP  &none        &none      &none  &none  &none  &bt BT_CLR
+&none         &kp HOME   &kp UP      &kp END    &none     &none     &none        &none        &none        &none      &none  &none
+&none         &kp LEFT   &kp DOWN    &kp RIGHT  &none     &none     &none        &none        &mkp LCLK    &mkp RCLK  &none  &none  &none  &none
+&trans        &kp PG_UP  &kp INSERT  &kp PG_DN  &none     &none     &none        &none        &none        &none      &none  &none  &none  &none       &none  &none
+&trans        &trans     &trans      &trans     &trans    &trans    &trans       &trans       &trans       &trans
             >;
         };
 
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------
+// [ Layer 3 : Function ]
+// |  BOOT   | // 该按键在接收器上
+//
+// |   F12   |   F1    |   F2    |   F3    |   F4    |   F5    |  none   |         |  none   |   F6    |   F7    |   F8    |   F9    |   F10   |   F11   |
+// |   F12   |   F11   |   F12   |   F13   |   F14   |   F15   |                             |   F16   |   F17   |   F18   |   F19   |   F20   |   F21   |
+// |  CAPS   |   F21   |   F22   |   F23   |   F24   |  PRSC   |  none   |         |  none   |  LCLK   |  RCLK   |  none   |  none   |  none   | NUM_LCK |
+// |  trans  |  none   | S(DEL)  | C(INS)  | S(INS)  |  S+C+A  |NONE|NONE|         |NONE|NONE|  none   |  none   |  none   |  none   |   RGB   |  trans  |
+//                     |  trans  |  trans  |  trans  |  trans  |  trans  |         |  trans  |  trans  |  trans  |  trans  |  trans  |
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------
         fn_layer {
             display-name = "func";
             bindings = <
@@ -148,31 +198,27 @@ macros {
             >;
         };
 
-        // 目前 鼠标层的设计主要是为了配合左手键区的方向键层，以及ctrl c ctrl v ctrl x，但是无法使用fn层的万能复制粘贴键。
-
+        // 目前鼠标层的设计主要是为了配合左手键区的方向键层，以及ctrl c ctrl v ctrl x，但是无法使用fn层的万能复制粘贴键。
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------
+// [ Layer 4 : Mouse ]
+// |  BOOT   | // 该按键在接收器上
+//
+// |  trans  |  trans  |  trans  |  trans  |  trans  |  trans  |  trans  |         |  trans  |  trans  |  trans  |  trans  |  trans  |  trans  |  trans  |
+// |  trans  |  trans  |  trans  |  trans  |  trans  |  trans  |                             |  trans  |  trans  |  trans  |  trans  |  trans  |  trans  |
+// |  trans  |  trans  |  trans  |  trans  |  RCLK   |  LCLK   |  trans  |         |  trans  |  LCLK   |  RCLK   |  trans  |  trans  |  trans  |  trans  |
+// |  trans  |  trans  |  trans  |  trans  |  trans  |  trans  |TRNS|TRNS|         |TRNS|TRNS|  trans  |  trans  |  trans  |  trans  |  trans  |  trans  |
+//                     |  trans  |  trans  |  trans  |  trans  |  trans  |         |  SPACE  |  trans  |  trans  |  trans  |  trans  |
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------
         mouse_layer {
             display-name = "mouse";
             bindings = <
 &bootloader
 &trans       &trans          &trans          &trans           &trans     &trans     &trans     &trans  &trans     &trans     &trans  &trans  &trans  &trans
-&trans       &trans          &mmv MOVE_UP    &trans           &trans     &trans     &trans     &trans  &trans     &trans     &trans  &trans
-&trans       &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &mkp RCLK  &mkp LCLK  &trans     &trans  &mkp LCLK  &mkp RCLK  &trans  &trans  &trans  &trans
+&trans       &trans          &trans          &trans           &trans     &trans     &trans     &trans  &trans     &trans     &trans  &trans
+&trans       &trans          &trans          &trans           &mkp RCLK  &mkp LCLK  &trans     &trans  &mkp LCLK  &mkp RCLK  &trans  &trans  &trans  &trans
 &trans       &trans          &trans          &trans           &trans     &trans     &trans     &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
 &trans       &trans          &trans          &trans           &trans     &trans     &kp SPACE  &trans  &trans     &trans
             >;
         };
-
-        /*
-        RES_layer {
-            display-name = "RESERVE";
-            bindings = < &bootloader
-&none                 &none         &none          &none             &none                &none                &none                                    &none        &none               &none              &none            &none           &none            &none            
-&none                 &none         &none          &none             &none                &none                                                                      &none               &none              &none            &none           &none            &none
-&none                 &none         &none          &none             &none                &none                &none                                    &none        &none               &none              &none            &none           &none            &none
-&none                 &none         &none          &none             &none                &none                &none         &none        &none         &none        &none               &none              &none            &none           &none            &none
-                      &none         &none          &none             &none                &none                                                                      &none               &none              &none            &none           &none
-            >;
-        };
-*/
     };
 };
