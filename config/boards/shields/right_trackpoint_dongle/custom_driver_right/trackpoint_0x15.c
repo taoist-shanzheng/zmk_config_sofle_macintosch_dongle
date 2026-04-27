@@ -23,7 +23,7 @@ LOG_MODULE_REGISTER(trackpoint, LOG_LEVEL_DBG);
 /* ========================================================================= */
 
 // --- 滚轮方向配置 ---
-#define SCROLL_X_DIR CONFIG_TRACKPOINT_SCROLL_X_DIR
+#define SCROLL_X_DIR (-CONFIG_TRACKPOINT_SCROLL_X_DIR)
 #define SCROLL_Y_DIR CONFIG_TRACKPOINT_SCROLL_Y_DIR
 
 // --- 滚轮灵敏度与粒度配置 ---
