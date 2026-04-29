@@ -70,72 +70,72 @@ layers:
   - /
   num_syb:
   - '&bootloader'
-  - '`'
-  - '!'
-  - '@'
-  - '#'
-  - $
-  - '%'
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - +
-  - '7'
-  - '8'
-  - '9'
-  - '~'
-  - ^
-  - '~'
-  - <
-  - '-'
-  - '='
-  - '>'
-  - _
-  - '-'
-  - '4'
-  - '5'
-  - '6'
-  - '&'
-  - '|'
-  - ^
-  - '{'
-  - '['
-  - ']'
-  - '}'
-  - $
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - '*'
-  - '1'
-  - '2'
-  - '3'
-  - ':'
-  - ''''
-  - {t: ▽, type: trans}
-  - ','
+  - ESC
   - (
-  - )
-  - ;
   - ''
+  - ''
+  - $
+  - ''
+  - CAPS
+  - INSERT
+  - ''
+  - KP 7
+  - KP 8
+  - KP 9
+  - )
+  - BACKSPACE
+  - TAB
+  - ''
+  - ''
+  - UP
+  - ''
+  - ''
+  - ''
+  - KP 4
+  - KP 5
+  - KP 6
+  - KP COMMA
+  - \
+  - LSHFT
+  - A
+  - LEFT
+  - DOWN
+  - RIGHT
+  - ''
+  - '&mkp MB1'
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - '%'
-  - '0'
-  - ','
-  - .
-  - /
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - ''
+  - KP 1
+  - KP 2
+  - KP 3
+  - KP ENTER
+  - RETURN
+  - LCTRL
+  - Z
+  - X
+  - C
+  - V
+  - ''
+  - '&mkp MB1'
+  - '&mkp MB2'
+  - PAGE DOWN
+  - PG UP
+  - ''
+  - KP 0
+  - KP 0
+  - KP DOT
+  - KP EQUAL
+  - DELETE
+  - LCMD
+  - LALT
+  - SPACE
+  - SPACE
+  - {t: default, h: toggle}
+  - {t: direct, h: toggle}
+  - KP PLUS
+  - KP MINUS
+  - KP ASTERISK
+  - KP DIVIDE
   direct:
   - '&bootloader'
   - OUT USB
