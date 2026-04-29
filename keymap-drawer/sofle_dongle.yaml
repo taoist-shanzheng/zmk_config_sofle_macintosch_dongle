@@ -3,18 +3,18 @@ layers:
   default:
   - '&bootloader'
   - ESC
-  - '&td_f1_f11'
-  - '&td_f2_f12'
-  - F3
-  - F4
-  - F5
-  - MUTE
-  - RGB TOG
-  - F6
-  - F7
-  - F8
-  - F9
-  - F10
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - CAPS
+  - PRINTSCREEN
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+  - '0'
   - BACKSPACE
   - TAB
   - Q
@@ -28,21 +28,21 @@ layers:
   - O
   - P
   - \
-  - {t: ENTER, h: direct}
+  - LSHFT
   - A
   - S
   - D
   - F
   - G
-  - '&mkp MCLK'
+  - '&mkp MB1'
   - '&mkp LCLK'
   - H
   - J
   - K
   - L
-  - ;
-  - ''''
-  - LSHFT
+  - RETURN
+  - RETURN
+  - LCTRL
   - Z
   - X
   - C
@@ -50,24 +50,24 @@ layers:
   - B
   - '&mkp LCLK'
   - '&mkp RCLK'
-  - '&bl BL_DEC'
-  - '&bl BL_INC'
+  - PAGE DOWN
+  - PAGE UP
   - N
   - M
   - ','
   - .
+  - '='
+  - DEL
+  - LGUI
+  - LALT
+  - SPACE
+  - SPACE
+  - {t: num_syb, h: toggle}
+  - {t: direct, h: toggle}
+  - KP PLUS
+  - '-'
+  - '*'
   - /
-  - RIGHT SHIFT
-  - '&td_lf_win_ctrl'
-  - LALT
-  - '&ctrl_dance'
-  - {t: BACKSPACE, h: func}
-  - {t: DEL, h: mouse}
-  - {t: ENTER, h: mouse}
-  - {t: SPACE, h: num_syb}
-  - '&ctrl_dance'
-  - LALT
-  - '&td_rt_win_ctrl'
   num_syb:
   - '&bootloader'
   - '`'
@@ -132,7 +132,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {type: held}
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -164,7 +164,7 @@ layers:
   - ''
   - ''
   - ''
-  - {type: held}
+  - ''
   - LEFT
   - DOWN
   - RIGHT
@@ -265,7 +265,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {type: held}
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -334,7 +334,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {type: held}
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - SPACE
   - {t: ▽, type: trans}
