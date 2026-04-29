@@ -146,12 +146,16 @@
             display-name = "num_syb";
             bindings = <
 &bootloader
-&kp GRAVE    &kp EXCL   &kp AT     &kp HASH   &kp DOLLAR  &kp PERCENT     &trans     &trans  &kp PLUS   &kp N7  &kp N8       &kp N9    &kp TILDE  &kp CARET
-&kp TILDE    &kp LT     &kp MINUS  &kp EQUAL  &kp GT      &kp UNDERSCORE  &kp MINUS  &kp N4  &kp N5     &kp N6  &kp AMPS     &kp PIPE
-&kp CARET    &kp LBRC   &kp LBKT   &kp RBKT   &kp RBRC    &kp DOLLAR      &trans     &trans  &kp ASTRK  &kp N1  &kp N2       &kp N3    &kp COLON  &kp SQT
-&trans       &kp COMMA  &kp LPAR   &kp RPAR   &kp SEMI    &none           &trans     &trans  &trans     &trans  &kp PERCENT  &kp N0    &kp COMMA  &kp DOT    &kp FSLH  &trans
-&trans       &trans     &trans     &trans     &trans      &trans          &trans     &trans  &trans     &trans
+&kp ESC      &kp LPAR  &none      &none      &kp DOLLAR  &none  &kp CAPS     &kp INSERT    &none       &kp KP_N7      &kp KP_N8     &kp KP_N9      &kp RPAR      &kp BACKSPACE
+&kp TAB      &none     &none      &kp UP     &none       &none  &none        &kp KP_N4     &kp KP_N5        &kp KP_N6      &kp KP_COMMA  &kp BACKSLASH
+&kp LSHFT    &kp A     &kp LEFT   &kp DOWN   &kp RIGHT   &none  &mkp MB1     &trans        &none            &kp KP_N1      &kp KP_N2     &kp KP_N3      &kp KP_ENTER  &kp RETURN
+&kp LCTRL    &kp Z     &kp X      &kp C      &kp V       &none  &mkp MB1     &mkp MB2      &kp PAGE_DOWN    &kp PG_UP      &none         &kp KP_N0      &kp KP_N0     &kp KP_DOT     &kp KP_EQUAL  &kp DELETE
+&kp LCMD     &kp LALT  &kp SPACE  &kp SPACE  &to 0       &to 2  &kp KP_PLUS  &kp KP_MINUS  &kp KP_ASTERISK  &kp KP_DIVIDE
             >;
+
+            sensor-bindings =
+                <&inc_dec_kp UP DOWN>,
+                <&inc_dec_kp LEFT RIGHT>;
         };
 
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
