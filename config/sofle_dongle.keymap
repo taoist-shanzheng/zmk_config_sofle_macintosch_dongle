@@ -172,12 +172,16 @@
             display-name = "direct";
             bindings = <
 &bootloader
-&out OUT_USB  &bt_out0   &bt_out1    &bt_out2   &bt_out3  &bt_out4  &kp C_POWER  &kp C_SLEEP  &none        &none      &none  &none  &none  &bt BT_CLR
-&none         &kp HOME   &kp UP      &kp END    &none     &none     &none        &none        &none        &none      &none  &none
-&none         &kp LEFT   &kp DOWN    &kp RIGHT  &none     &none     &none        &none        &mkp LCLK    &mkp RCLK  &none  &none  &none  &none
-&trans        &kp PG_UP  &kp INSERT  &kp PG_DN  &none     &none     &none        &none        &none        &none      &none  &none  &none  &none       &none  &none
-&trans        &trans     &trans      &trans     &trans    &trans    &trans       &trans       &trans       &trans
+&kp ESC      &kp F1    &kp F2     &kp F3     &kp F4   &none  &bt BT_CLR  &kp K_MUTE  &bl BL_INC     &none        &none     &none     &none       &kp BACKSPACE
+&kp TAB      &kp F5    &kp F6     &kp F7     &kp F8   &none  &bl BL_DEC  &none       &kp LBKT       &kp RBKT     &none     &none
+&kp LSHFT    &kp F9    &kp F10    &kp F11    &kp F12  &none  &mkp MB1    &none       &none          &none        &kp SEMI  &kp APOS  &kp RETURN  &kp RETURN
+&kp LCTRL    &kp Z     &kp X      &kp C      &kp V    &none  &mkp MB1    &mkp MB2    &kp PAGE_DOWN  &kp PAGE_UP  &none     &none     &kp COMMA   &kp DOT        &none  &kp DEL
+&kp LCMD     &kp LALT  &kp SPACE  &kp SPACE  &to 1    &to 0  &trans      &trans      &trans         &trans
             >;
+
+            sensor-bindings =
+                <&inc_dec_kp UP DOWN>,
+                <&inc_dec_kp LEFT RIGHT>;
         };
 
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------
