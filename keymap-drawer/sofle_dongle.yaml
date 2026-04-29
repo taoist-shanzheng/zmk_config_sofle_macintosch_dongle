@@ -138,68 +138,68 @@ layers:
   - KP DIVIDE
   direct:
   - '&bootloader'
-  - OUT USB
-  - '&bt_out0'
-  - '&bt_out1'
-  - '&bt_out2'
-  - '&bt_out3'
-  - '&bt_out4'
-  - POWER
-  - SLEEP
-  - ''
-  - ''
-  - ''
-  - ''
+  - ESC
+  - F1
+  - F2
+  - F3
+  - F4
   - ''
   - BT CLR
-  - ''
-  - HOME
-  - UP
-  - END
+  - MUTE
+  - '&bl BL_INC'
   - ''
   - ''
   - ''
   - ''
+  - BACKSPACE
+  - TAB
+  - F5
+  - F6
+  - F7
+  - F8
+  - ''
+  - '&bl BL_DEC'
+  - ''
+  - '['
+  - ']'
+  - ''
+  - ''
+  - LSHFT
+  - F9
+  - F10
+  - F11
+  - F12
+  - ''
+  - '&mkp MB1'
   - ''
   - ''
   - ''
+  - ;
+  - ''''
+  - RETURN
+  - RETURN
+  - LCTRL
+  - Z
+  - X
+  - C
+  - V
+  - ''
+  - '&mkp MB1'
+  - '&mkp MB2'
+  - PAGE DOWN
+  - PAGE UP
   - ''
   - ''
-  - LEFT
-  - DOWN
-  - RIGHT
+  - ','
+  - .
   - ''
-  - ''
-  - ''
-  - ''
-  - '&mkp LCLK'
-  - '&mkp RCLK'
-  - ''
-  - ''
-  - ''
-  - ''
-  - {t: ▽, type: trans}
-  - PG UP
-  - INSERT
-  - PG DN
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - DEL
+  - LCMD
+  - LALT
+  - SPACE
+  - SPACE
+  - {t: num_syb, h: toggle}
+  - {t: default, h: toggle}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
